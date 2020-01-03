@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyText
+  duration: 2020-01-02 16:46:33
+  category: MyString
+  effort: 1
+  file: MyString
+  user: one
+
+two:
+  description: MyText
+  duration: 2020-01-02 16:46:33
+  category: MyString
+  effort: 1
+  file: MyString
+  user: two
