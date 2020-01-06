@@ -1,4 +1,5 @@
 class ActivitiesController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :set_activity, only: [:show, :update, :destroy]
 
   # GET /activities
@@ -15,13 +16,9 @@ class ActivitiesController < ApplicationController
   # POST /activities
   # POST /activities.json
   def create
-    @activity = Activity.new(activity_params)
-
-    if @activity.save
-      render :show, status: :created, location: @activity
-    else
-      render json: @activity.errors, status: :unprocessable_entity
-    end
+    file = params["fit_file"]
+    user = User.all()[0]
+    @activity = Activity.create!(user: user, description: params["description"], fit_file: params["fit_file"], file: file.original_filename)
   end
 
   # PATCH/PUT /activities/1
@@ -50,4 +47,5 @@ class ActivitiesController < ApplicationController
     def activity_params
       params.require(:activity).permit(:description, :duration, :category, :effort, :file, :user_id)
     end
+
 end
