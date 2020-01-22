@@ -1,47 +1,72 @@
-// Run this example by adding <%= javascript_pack_tag 'hello_react' %> to the head of your layout file,
-// like app/views/layouts/application.html.erb. All it does is render <div>Hello React</div> at the bottom
-// of the page.
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './dashboard.css'
+import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
+import { getUser } from "./api";
+import PropTypes from "prop-types";
 
-import React, {useState, useEffect} from 'react';
-import ReactDOM from 'react-dom';
-import { getUser } from './api';
-import PropTypes from 'prop-types';
+import {
+  Grid,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  makeStyles
+} from "@material-ui/core";
 
-import {Container, Col, Row, Nav} from 'react-bootstrap';
+import { EditActivity } from "./editActivity";
 
-import {EditActivity} from './editActivity'
+const drawerWidth = 200;
 
-const Dashboard = (props) => {
-  const [user, setUser] = useState('');
+const useStyles = makeStyles(theme => ({
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0
+  },
+  drawerPaper: {
+    width: drawerWidth
+  },
+  toolbar: theme.mixins.toolbar,
+  content: {
+    marginLeft: 10
+  }
+}));
+
+const Dashboard = props => {
+  const classes = useStyles();
+
+  const [user, setUser] = useState("");
 
   useEffect(() => {
-    setUser('Lucas');
+    setUser("Lucas");
   }, []);
 
   return (
-    <Container fluid={true}>
-      <Row>
-        <Col className="menu">
-          <Nav defaultActiveKey="/home" className="flex-column">
-            <Nav.Link href="/home">Dashboard</Nav.Link>
-          </Nav>
-        </Col>
-        <Col xs={12}>
-          <Row>Hello {user}!</Row>
-          <Row>
-            <EditActivity />
-          </Row>
-        </Col>
-      </Row>
-    </Container>
-  )
-}
+    <Grid container direction="row" wrap="nowrap">
+      <Grid item>
+        <Drawer
+          variant="permanent"
+          open={true}
+          className={classes.drawerPaper}
+          classes={{ paper: classes.drawerPaper }}
+        >
+          <Grid container direction="column" justify="space-between">
+            <Grid item>
+              <List>
+                <ListItem button>
+                  <ListItemText primary="Dashboard" />
+                </ListItem>
+              </List>
+            </Grid>
+            <Grid item>{user}</Grid>
+          </Grid>
+        </Drawer>
+      </Grid>
+      <Grid item className={classes.content}>
+        <EditActivity />
+      </Grid>
+    </Grid>
+  );
+};
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <Dashboard />,
-    document.getElementById('root'),
-  )
-})
+document.addEventListener("DOMContentLoaded", () => {
+  ReactDOM.render(<Dashboard />, document.getElementById("root"));
+});

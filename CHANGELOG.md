@@ -1,6 +1,10 @@
 # CHANGE LOG
 
 ### 1-5-2020
+ - Removed bootstrap
+ - Added material-ui
+
+### 1-5-2020
  - Added basic file upload
 
 ### 1-2-2020
