@@ -11,14 +11,22 @@ class ActivitiesController < ApplicationController
   # GET /activities/1
   # GET /activities/1.json
   def show
+    @activity.activity_file.open do |file|
+      doc = File.open(file) { |f| Nokogiri::XML(f) }
+      doc.remove_namespaces!
+
+      @calories = doc.xpath("//Calories").inject(0) { |sum, c| sum + c.text.to_f() }
+
+      @distance = doc.xpath("//Lap/DistanceMeters").inject(0) { |sum, c| sum + c.text.to_f() }
+    end
   end
 
   # POST /activities
   # POST /activities.json
   def create
-    file = params["fit_file"]
+    file = params["activity_file"]
     user = User.all()[0]
-    @activity = Activity.create!(user: user, description: params["description"], fit_file: params["fit_file"], file: file.original_filename)
+    @activity = Activity.create!(user: user, description: params["description"], activity_file: params["activity_file"], file: file.original_filename)
   end
 
   # PATCH/PUT /activities/1

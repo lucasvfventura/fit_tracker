@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
+import PropTypes from "prop-types";
 
-import { Grid, Button, Input, makeStyles, TextField } from "@material-ui/core";
+import { Grid, Button, makeStyles, TextField } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   input: {
@@ -8,14 +9,24 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function FileUpload({ props }) {
+export function FileUpload(props) {
   const classes = useStyles();
-
+  const [fileName, setFileName] = useState("");
   let inputElement = "";
+
   const handleTextClick = e => {
     e.preventDefault();
     inputElement.click();
   };
+
+  const handleClick = e => {
+    if(e.target.files[0] != null &&){
+      setFileName(e.target.files[0].name);
+    } else {
+      setFileName("")
+    }
+    props.onChange(e);
+  }
 
   return (
     <Grid container direction="row" wrap="nowrap">
@@ -26,14 +37,16 @@ export function FileUpload({ props }) {
         InputProps={{
           readOnly: true
         }}
+        value={fileName}
+        fullWidth
       />
-      <Input
+      <input
         className={classes.input}
         name="File"
-        accept="*"
+        accept={props.accept}
         id="raised-button-file"
-        multiple
         type="file"
+        onChange={handleClick}
       />
       <label htmlFor="raised-button-file">
         <Button
@@ -47,4 +60,9 @@ export function FileUpload({ props }) {
       </label>
     </Grid>
   );
+}
+
+FileUpload.propsTypes = {
+  onChange: PropTypes.func,
+  accept: PropTypes.string
 }

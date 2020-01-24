@@ -5,19 +5,19 @@ import { Grid, Button, TextField } from "@material-ui/core";
 import { FileUpload } from "./fileUpload";
 
 export const EditActivity = props => {
-  const [fitFile, setFitFile] = useState(null);
+  const [activityFile, setActivityFile] = useState(null);
   const [description, setDescription] = useState("");
 
   const handleFileUpload = event => {
-    setFitFile(event.target.files[0]);
+    setActivityFile(event.target.files[0]);
   };
 
   const handleSubmit = event => {
     event.preventDefault();
 
     const formData = new FormData();
-    formData.append("description", description);s
-    formData.append("fit_file", fitFile);
+    formData.append("description", description);
+    formData.append("activity_file", activityFile);
 
     const options = {
       method: "POST",
@@ -36,7 +36,7 @@ export const EditActivity = props => {
         />
       </Grid>
       <Grid item>
-        <FileUpload />
+        <FileUpload onChange={handleFileUpload} accept=".tcx"/>
       </Grid>
       <Grid item>
         <Button onClick={handleSubmit} color="primary" variant="contained">

@@ -1,6 +1,11 @@
 # CHANGE LOG
 
-### 1-5-2020
+### 1-23-2020
+ - Migrated to use TCS files for simplicity
+ - Added nokigiri xml parser
+ - Added calories and distance fields to activity
+
+### 1-21-2020
  - Removed bootstrap
  - Added material-ui
 
