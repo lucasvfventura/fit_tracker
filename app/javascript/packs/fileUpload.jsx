@@ -20,7 +20,7 @@ export function FileUpload(props) {
   };
 
   const handleClick = e => {
-    if(e.target.files[0] != null &&){
+    if(e.target.files[0] != null){
       setFileName(e.target.files[0].name);
     } else {
       setFileName("")

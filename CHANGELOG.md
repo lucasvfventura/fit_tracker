@@ -1,5 +1,9 @@
 # CHANGE LOG
 
+### 1-25-2020
+ - Added activity validations
+ - Added duration and calories attributes
+
 ### 1-23-2020
  - Migrated to use TCS files for simplicity
  - Added nokigiri xml parser
