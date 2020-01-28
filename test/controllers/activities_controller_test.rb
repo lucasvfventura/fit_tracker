@@ -1,8 +1,15 @@
 require 'test_helper'
 
 class ActivitiesControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+  
   setup do
+    @lucas = users(:lucas)
+    sign_in(@lucas)
+
     @activity = activities(:one)
+    file = Rails.root.join('test', 'fixtures', 'files', @activity.file)
+    @activity.activity_file.attach(io: File.open(file), filename: @activity.file)
   end
 
   test "should get index" do
@@ -12,7 +19,9 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create activity" do
     assert_difference('Activity.count') do
-      post activities_url, params: { activity: { category: @activity.category, description: @activity.description, duration: @activity.duration, effort: @activity.effort, file: @activity.file, user_id: @activity.user_id } }, as: :json
+
+      upload = fixture_file_upload(Rails.root.join('test', 'fixtures', 'files', @activity.file), 'tcx')
+      post activities_url, params: { activity: { description: @activity.description, effort: @activity.effort, user_id: @activity.user_id }, activity_file: upload }
     end
 
     assert_response 201

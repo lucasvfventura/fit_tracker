@@ -1,17 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   description: MyText
-  duration: 2020-01-02 16:46:33
+  duration: 300
   category: MyString
   effort: 1
-  file: MyString
-  user: one
+  file: activity_1.tcx
+  user_id: 1
 
 two:
+  id: 2
   description: MyText
-  duration: 2020-01-02 16:46:33
+  duration: 500
   category: MyString
   effort: 1
-  file: MyString
-  user: two
+  file: activity_2.tcx
+  user_id: 2

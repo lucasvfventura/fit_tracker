@@ -1,5 +1,10 @@
 # CHANGE LOG
 
+### 1-28-2020
+ - Fixed controllers tests
+ - Added activity active record basic test
+ - Migrated database to PostgreSQL
+
 ### 1-25-2020
  - Added activity validations
  - Added duration and calories attributes

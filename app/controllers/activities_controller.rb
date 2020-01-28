@@ -5,21 +5,22 @@ class ActivitiesController < ApplicationController
   # GET /activities
   # GET /activities.json
   def index
-    @activities = Activity.all
+    @activities = Activity.order(:created_at)
   end
 
   # GET /activities/1
   # GET /activities/1.json
   def show
-    @activity_data = @activity.activity_data()
   end
 
   # POST /activities
   # POST /activities.json
   def create
-    file = params["activity_file"]    
+    file = params["activity_file"]  
     user = User.all()[0]
-    @activity = Activity.create!(user: user, description: params["description"], activity_file: params["activity_file"], file: file.original_filename)
+    @activity = Activity.create!(user: user, description: params["description"], activity_file: file, file: file.original_filename)
+
+    render json: @activity, status: :created
   end
 
   # PATCH/PUT /activities/1
@@ -46,7 +47,7 @@ class ActivitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_params
-      params.require(:activity).permit(:description, :duration, :category, :effort, :file, :user_id)
+      params.require(:activity).permit(:description)
     end
 
 end
