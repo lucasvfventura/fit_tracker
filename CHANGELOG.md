@@ -1,5 +1,8 @@
 # CHANGE LOG
 
+### 1-29-2020
+ - Added Rspec tests
+
 ### 1-28-2020
  - Fixed controllers tests
  - Added activity active record basic test

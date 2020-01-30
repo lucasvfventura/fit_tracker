@@ -17,8 +17,7 @@ class ActivitiesController < ApplicationController
   # POST /activities.json
   def create
     file = params["activity_file"]  
-    user = User.all()[0]
-    @activity = Activity.create!(user: user, description: params["description"], activity_file: file, file: file.original_filename)
+    @activity = Activity.create!(user: current_user, description: params["description"], activity_file: file, file: file.original_filename)
 
     render json: @activity, status: :created
   end
