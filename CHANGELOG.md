@@ -1,7 +1,13 @@
 # CHANGE LOG
 
+### 2-1-2020
+ - Added Rspec controller tests
+ - Added React thunk and basic api
+ - Added CSRF token verification
+ - Added basic activities list
+
 ### 1-29-2020
- - Added Rspec tests
+ - Added Rspec model tests
 
 ### 1-28-2020
  - Fixed controllers tests

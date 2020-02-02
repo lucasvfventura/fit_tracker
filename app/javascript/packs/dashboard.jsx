@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
-import { getUser } from "./api";
+import {useDispatch, useSelector} from "react-redux";
 import PropTypes from "prop-types";
 
 import {
+  Button,
   Grid,
   Drawer,
   List,
@@ -12,6 +12,8 @@ import {
   makeStyles
 } from "@material-ui/core";
 
+import {requestActivities} from "./state/actions/dashboard";
+import {signOutUser} from "./state/actions/user"
 import { EditActivity } from "./editActivity";
 
 const drawerWidth = 200;
@@ -30,14 +32,26 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Dashboard = props => {
+export const Dashboard = props => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const dashboardData = useSelector(state => state.dashboard);
 
-  const [user, setUser] = useState("");
+  console.log(dashboardData);
 
   useEffect(() => {
-    setUser("Lucas");
+    dispatch(requestActivities())
   }, []);
+
+  const activities = dashboardData.activities != null ? dashboardData.activities.map(a => (
+    <ul key={a.id}>
+      <li>{a.description}</li>
+      <li>{a.duration}</li>
+      <li>{a.category}</li>
+      <li>{a.file}</li>
+      <li>{a.created_at}</li>
+    </ul>
+  )) : (<div></div>);
 
   return (
     <Grid container direction="row" wrap="nowrap">
@@ -56,17 +70,17 @@ const Dashboard = props => {
                 </ListItem>
               </List>
             </Grid>
-            <Grid item>{user}</Grid>
+            <Grid item>
+              <Button onClick={e => dispatch(signOutUser())} color="primary">Sign Out</Button>
+            </Grid>
           </Grid>
         </Drawer>
       </Grid>
       <Grid item className={classes.content}>
+        {activities}
         <EditActivity />
       </Grid>
     </Grid>
   );
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-  ReactDOM.render(<Dashboard />, document.getElementById("root"));
-});

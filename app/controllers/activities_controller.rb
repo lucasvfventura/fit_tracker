@@ -1,11 +1,10 @@
 class ActivitiesController < ApplicationController
-  skip_before_action :verify_authenticity_token
   before_action :set_activity, only: [:show, :update, :destroy]
 
   # GET /activities
   # GET /activities.json
   def index
-    @activities = Activity.order(:created_at)
+    @activities = Activity.where(user: current_user).order(:created_at)
   end
 
   # GET /activities/1
